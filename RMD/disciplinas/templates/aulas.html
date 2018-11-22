@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h1> {{title}} </h1>
+
+	{% for aula in aulas %}
+		<div class="formatacao-disciplina content-section col-md-5">
+			<h2><a href="#"><span class="tam-livro fas fa-book-open"></span><br>{{ aula.nome }}</a></h2>
+		</div>
+	{% endfor %}
+
+{% endblock %}
