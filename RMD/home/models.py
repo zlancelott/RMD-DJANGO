@@ -60,10 +60,7 @@ class Lesson (models.Model):
 	subject_class = models.ForeignKey(SubjectClass, on_delete=models.CASCADE)  # VERIFICAR ON_DELETE
 
 	def __str__(self):
-		return 'Aula ' + self.date
-
-	def __repr__(self):
-		return self.date
+		return 'Aula'
 
 
 # Arquivo da Aula
