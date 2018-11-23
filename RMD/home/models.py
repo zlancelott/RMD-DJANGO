@@ -38,11 +38,14 @@ class SubjectClass(models.Model):
 
 # Usuário
 class User(models.Model):
-    login = models.CharField(max_length=20)
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    gender = models.CharField(max_length=1)
-    subject_class = models.ForeignKey(SubjectClass, on_delete = models.CASCADE)
+	login = models.CharField(max_length=20)
+	name = models.CharField(max_length=100)
+	email = models.EmailField()
+	gender = models.CharField(max_length=1)
+	subject_class = models.ForeignKey(SubjectClass, on_delete = models.CASCADE)
+
+	def __str__(self):
+		return self.name
 
 class UserClassAssociation(models.Model):
 	user_id = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -55,6 +58,9 @@ class UserClassAssociation(models.Model):
 class Lesson (models.Model):
 	date = models.DateField()
 	subject_class = models.ForeignKey(SubjectClass, on_delete=models.CASCADE)  # VERIFICAR ON_DELETE
+
+	def __str__(self):
+		return 'Aula ' + self.date
 
 	def __repr__(self):
 		return self.date
