@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'bootstrapform',
 ]
 
+AUTH_USER_MODEL = 'home.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
