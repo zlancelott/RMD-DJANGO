@@ -76,14 +76,14 @@
 		</div>
 	</nav>
 	<div class="wrapper">
-		{% if disciplinas %}
+		{% if subjects %}
 		<nav  id="sidebar">
 				<ul class="list-unstyled components">
 					<h2 class="font-weight-bold text-white h4" style="text-align: center;">Disciplinas</h2>
-					{% for disciplina in disciplinas %}
+					{% for subject in subjects %}
 					<li>
-						<a href="#pageSubmenu{{ disciplina.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-book">&nbsp;</span>{{ disciplina.nome }}</a>
-						<ul class=" collapse list-unstyled" id="pageSubmenu{{ disciplina.id }}">
+						<a href="#pageSubmenu{{ subject.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-book">&nbsp;</span>{{ subject.name }}</a>
+						<ul class=" collapse list-unstyled" id="pageSubmenu{{ subject.id }}">
 							{% for aula in aulas %}
 								<li>
 									<a href="#pageSubmenu{{ aula.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>{{ aula.nome }}</strong></a>

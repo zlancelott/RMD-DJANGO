@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'bootstrapform',
 ]
 
+
 AUTH_USER_MODEL = 'home.User'
 
 MIDDLEWARE = [
