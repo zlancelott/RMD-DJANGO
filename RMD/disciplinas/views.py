@@ -9,7 +9,7 @@ def disciplina(request, disciplina):
     subject_classes = user_logged_in.subjectclasses.all()
 
 
-    # Obtendo o objeto disciplina
+    # Obtendo a turma atual
     for subject_class in subject_classes:
         if subject_class.subject.name == disciplina:
             current_class = subject_class
@@ -39,7 +39,6 @@ def photos_class(request, disciplina):
 
     # Obtendo Aulas dessa disciplina
     lessons = current_class.lessons.all()
-
 
 
 
