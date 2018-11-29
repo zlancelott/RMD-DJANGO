@@ -15,18 +15,13 @@ def home(request):
     subject_classes = user_logged_in.subjectclasses.all()
 
 
-    ###### OBTENDO LESSONS / AULAS ######
-    ###### SubjectClass.lessons.all() ######
-
-    info = {
-        'subjects':[i.subject for i in subject_classes], #Compreensão de lista para obter as disciplinas das turmas
-        'aulas': [{"id": "1", "nome": "Aula 1"}, {"id": "2", "nome": 'Aula 2'},
-                {"id": "3", "nome": "Aula 3"}, {"id": "4", "nome": "Aula 4"}]
+    json_data = {
+        #Turmas
+        'subject_classes':list(subject_classes),
     }
 
-    print (info, "\n\n\n\n")
 
-    return render(request, 'home.html', info)
+    return render(request, 'home.html', json_data)
 
 
 def logout_view(request):
@@ -45,3 +40,6 @@ def submeter_arquivos(request):
     else:
         form = UploadFileForm()
         return render(request, 'submeter_arquivos.html', {'form': form})
+
+def show_image(request):
+    return render(request, 'show_images.html')
