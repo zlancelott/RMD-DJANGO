@@ -76,17 +76,19 @@
 		</div>
 	</nav>
 	<div class="wrapper">
-		{% if disciplinas %}
+		{% if subject_classes %}
 		<nav  id="sidebar">
 				<ul class="list-unstyled components">
 					<h2 class="font-weight-bold text-white h4" style="text-align: center;">Disciplinas</h2>
-					{% for disciplina in disciplinas %}
+					{% for subject_class in subject_classes %}
 					<li>
-						<a href="#pageSubmenu{{ disciplina.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-book">&nbsp;</span>{{ disciplina.nome }}</a>
-						<ul class=" collapse list-unstyled" id="pageSubmenu{{ disciplina.id }}">
-							{% for aula in aulas %}
+						<a href="#pageSubmenu{{ subject_class.subject.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span class="fas fa-book">&nbsp;</span>{{ subject_class.subject.name }}</a>
+						<ul class=" collapse list-unstyled" id="pageSubmenu{{ subject_class.subject.id }}">
+							{% for aula in subject_class.lessons.all %}
 								<li>
-									<a href="#pageSubmenu{{ aula.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>{{ aula.nome }}</strong></a>
+									<!-- LEMBRE-SE: Cada aula tem vários arquivos (LessonFiles) 
+									     Abaixo você usa o ID para fazer o nome "Aula x", onde x é o ID-->
+									<a href="#pageSubmenu{{ aula.id }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>Aula {{ aula.id }}</strong></a>
 									<ul class="collapse list-unstyled" id="pageSubmenu{{ aula.id }}">
 										{% for arquivo in arquivos %}
 										<li>

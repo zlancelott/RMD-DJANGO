@@ -1,32 +1,55 @@
 from django.shortcuts import render
 
-# Create your views here.
 def disciplina(request, disciplina):
-    # # Conexão FTP
-    # ftp = FTP('192.168.15.5')
-    # ftp.login(user='FTP_Server', passwd='ftpserver')
+    user_logged_in = request.user
 
-    # # disciplinas = [{"id": "12", "nome": "Teoria da Computação"}, {"id": "13", "nome": "Gestão de Projetos"},
-    # #                {"id": "14", "nome": "Trabalho de Conclusão"}, {"id": "15", "nome": "Processamento Digital de Imagens"}]
+    info2 = {'disciplinas':[], 'aulas':[]}
 
-    # # Acessando a pasta no servidor correspondente as aulas da disciplina
-    # path_lessons = "/Computer Science/7-semester/%s/" % (disciplina)
-    # ftp.cwd(path_lessons)
-    # lessons = ftp.nlst()  # Listando as aulas da disciplina
+    #Turmas em que o usuário está matriculado
+    subject_classes = user_logged_in.subjectclasses.all()
 
-    # aulas = []
-    # for j in range(len(lessons)):
-    #     aulas.append({})
-    #     aulas[j]["id"] = j
-    #     aulas[j]["nome"] = lessons[j]
 
-    json_info = {
-        'disciplinas':[{"id": "12", "nome": "Teoria da Computação"}, {"id": "13", "nome": "Gestão de Projetos"},
-                {"id": "14", "nome": "Trabalho de Conclusão"}, {"id": "15", "nome": "Processamento Digital de Imagens"}],
-        'aulas': [{"id": "1", "nome": "Aula 1"}, {"id": "2", "nome": 'Aula 2'},
-                {"id": "3", "nome": "Aula 3"}, {"id": "4", "nome": "Aula 4"}],
-        'title': disciplina
+    # Obtendo a turma atual
+    for subject_class in subject_classes:
+        if subject_class.subject.name == disciplina:
+            current_class = subject_class
+            break
+
+    json_data = {
+        # Turmas
+        'subject_classes': [i for i in subject_classes],
+        'current_class': subject_class
     }
 
 
-    return render(request, 'aulas.html', json_info)
+    return render(request, 'aulas.html', json_data)
+
+def photos_class(request, disciplina):
+    current_user = request.user
+
+    #Turmas em que o usuário está matriculado
+    subject_classes = current_user.subjectclasses.all()
+
+
+    # Obtendo a turma atual
+    for subject_class in subject_classes:
+        if subject_class.subject.name == disciplina:
+            current_class = subject_class
+            break
+
+    # Obtendo Aulas dessa disciplina
+    lessons = current_class.lessons.all()
+
+
+
+    ### TEM QUE SABER EM QUE AULA ELE ESTÁ (RECEBER COMO PARAMETRO DA FUNCAO E DA URL)
+
+    # Arquivos da Disciplina (Nesse exemplo, eu peguei a Aula da posição 0)
+    # Arquivos da aula de posição 0
+    lessons_files = lessons[0].lesson.all()
+
+    name_lessons_files = []
+    for lesson_file in lessons_files:
+        name_lessons_files.append(lesson_file.file_image)
+
+    return render(request, 'photos_class.html', {'name_files': name_lessons_files})
