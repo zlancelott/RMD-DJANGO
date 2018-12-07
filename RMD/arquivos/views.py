@@ -1,3 +1,5 @@
-from django.shortcuts import render
+import time
 
-# Create your views here.
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.views import View

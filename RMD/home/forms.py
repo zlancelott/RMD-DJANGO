@@ -1,13 +1,39 @@
-from django.forms import ModelForm
+from django import forms
 from .models import LessonFile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
 
-class UploadFileForm(ModelForm):
+class UploadFileForm(forms.ModelForm):
     class Meta:
         model = LessonFile
 
-        fields = ['name', 'subject', 'lesson', 'author', 'file_image']
+        fields = ['name', 'subject', 'lesson', 'file_image']
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'maxlength': 100,
+                'placeholder': 'Nome do arquivo',
+                'alt': 'Campo Nome'
+            }),
+
+            'subject': forms.Select(attrs={
+                'class': 'form-control',
+                'alt': 'Campo Disciplina'
+            }),
+
+            'lesson': forms.Select(attrs={
+                'class': 'form-control',
+                'alt': 'Campo Aula'
+            })
+        }
+
+        labels = {
+            'name': 'Nome',
+            'subject': 'Disciplina',
+            'lesson': 'Aula',
+            'file_image': 'Arquivos'
+        }
 
 
 

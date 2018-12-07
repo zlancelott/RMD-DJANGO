@@ -39,6 +39,9 @@ class User(AbstractUser):
 
 	REQUIRED_FIELDS = ['username', 'gender', 'subject_class']
 
+	def __str__(self):
+		return self.first_name
+
 	class Meta:
 		db_table = 'home_user'
 

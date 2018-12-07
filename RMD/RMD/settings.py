@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'disciplinas',
     'usuarios',
     'bootstrapform',
+    'arquivos',
+    'photos',
 ]
 
 

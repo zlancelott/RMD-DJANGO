@@ -30,16 +30,31 @@ def logout_view(request):
 
 
 def submeter_arquivos(request):
+    user_logged_in = request.user
+
+    # Turmas em que o usuário está matriculado
+    subject_classes = user_logged_in.subjectclasses.all()
+
     if request.method == "POST":
         form = UploadFileForm(request.POST or None, request.FILES or None)
-
         if form.is_valid():
+
+            ### ERRADO ###
+            form.fields['author'] = request.user.id
             form.save()
             return redirect('home')
 
     else:
         form = UploadFileForm()
-        return render(request, 'submeter_arquivos.html', {'form': form})
+
+    
+    json_data = {
+        #Turmas
+        'subject_classes':list(subject_classes),
+        'form': form
+    }
+
+    return render(request, 'submeter_arquivos.html', json_data)
 
 def show_image(request):
     return render(request, 'show_images.html')
