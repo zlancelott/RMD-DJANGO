@@ -63,12 +63,12 @@
 					<a class="nav-item nav-link" href="{% url 'submeter_arquivos' %}">Adicionar Fotos</a>
 					<!-- Colocar uma condição para o botão, que ele só se ative quando tiver essa opcao -->
 
-					{% if user.moderador %}
-					<button type="button" class="formatacao-botao btn btn-default">Avaliar Submissões</button>
+					{% if moderador %}
+						<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
 					{% endif %}
-					<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
-						<span id="icone-sair" class="fas fa-sign-out-alt"></span>
-					</a>
+						<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
+							<span id="icone-sair" class="fas fa-sign-out-alt"></span>
+						</a>
 					{% else %} {% endif %}
 
 				</div>

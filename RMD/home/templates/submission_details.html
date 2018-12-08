@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Nome: {{lesson.name}} </p>
+    <p>Disciplina: {{lesson.subject.name}}</p>
+    <p>Aula: {{lesson.lesson.id}}</p>
+    <p>
+        Image: 
+        <img src="{{MEDIA_URL}}{{lesson.file_image}}" alt="">
+    </p>
+
+{% endblock %}

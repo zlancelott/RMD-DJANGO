@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form id="form_id" method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
 
-        <input id="id_submeter" type="submit" class="btn btn-success" value="Submeter">
+        <input type="submit" class="btn btn-success" value="Submeter">
     </form>
+
 {% endblock %}
 
 {% block javascript %}
-
+    <script>
+        document.getElementById("id_author").setAttribute("value", "{{user}}");
+    </script>   
 {% endblock %}

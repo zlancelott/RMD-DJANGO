@@ -7,7 +7,7 @@ class UploadFileForm(forms.ModelForm):
     class Meta:
         model = LessonFile
 
-        fields = ['name', 'subject', 'lesson', 'file_image']
+        fields = ['name', 'subject', 'lesson','author', 'file_image']
 
         widgets = {
             'name': forms.TextInput(attrs={
@@ -19,7 +19,7 @@ class UploadFileForm(forms.ModelForm):
 
             'subject': forms.Select(attrs={
                 'class': 'form-control',
-                'alt': 'Campo Disciplina'
+                'alt': 'Campo Disciplina',
             }),
 
             'lesson': forms.Select(attrs={

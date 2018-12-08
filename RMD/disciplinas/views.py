@@ -46,10 +46,17 @@ def photos_class(request, disciplina):
 
     # Arquivos da Disciplina (Nesse exemplo, eu peguei a Aula da posição 0)
     # Arquivos da aula de posição 0
-    lessons_files = lessons[0].lesson.all()
-
+    lessons_files = lessons[0].lesson.all().filter(evaluated=True) # Mostra apenas as imagens avaliadas
+ 
     name_lessons_files = []
     for lesson_file in lessons_files:
         name_lessons_files.append(lesson_file.file_image)
 
-    return render(request, 'photos_class.html', {'name_files': name_lessons_files})
+
+    json_data = {
+        #Turmas
+        'subject_classes':list(subject_classes),
+        'name_files':name_lessons_files
+    }
+
+    return render(request, 'photos_class.html', json_data)

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    {% for lesson_file in lessons_files %}
+        <div class="card">
+            <div class="card-header">
+                {{lesson_file.subject.name}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{lesson_file.name}}</h5>
+                <p class="card-text">{{lesson_file.lesson.date}}</p>
+                <a href="{% url 'submission_details' lesson_file.id %}" class="btn btn-primary">Detalhes</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    
+{% endblock %}

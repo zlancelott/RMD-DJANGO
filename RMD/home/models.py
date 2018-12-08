@@ -60,10 +60,12 @@ class SubjectClass(models.Model):
 
 
 class UserClassAssociation(models.Model):
-	user_id = models.ForeignKey(User, on_delete = models.CASCADE)
+	user_id = models.ForeignKey(User, related_name= 'moderador', on_delete = models.CASCADE)
 	subject_class_id = models.ForeignKey(SubjectClass, on_delete = models.CASCADE)
 	is_mod = models.BooleanField(default=False)
 
+	def __str__(self):
+		return self.user_id.first_name + " monitor de " + self.subject_class_id.subject.name
 
 
 # Aula
@@ -82,6 +84,7 @@ class LessonFile(models.Model):
 	lesson = models.ForeignKey(Lesson, related_name="lesson", on_delete = models.CASCADE)
 	author = models.ForeignKey(User, related_name= "lessonFile_author", on_delete = models.DO_NOTHING)
 	file_image = models.ImageField(upload_to="photos/", null=False)
+	evaluated = models.BooleanField(default='False')
 
 
 	def __str__(self):
