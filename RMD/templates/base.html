@@ -59,17 +59,19 @@
 				<!-- Navbar Right Side -->
 				<div class="navbar-nav">
 					{% if user.is_authenticated %}
-					
-					<a class="nav-item nav-link" href="{% url 'submeter_arquivos' %}">Adicionar Fotos</a>
-					<!-- Colocar uma condição para o botão, que ele só se ative quando tiver essa opcao -->
+						<a class="nav-item nav-link" href="{% url 'submeter_arquivos' %}">Adicionar Fotos</a>
+						<!-- Colocar uma condição para o botão, que ele só se ative quando tiver essa opcao -->
 
-					{% if moderador %}
-						<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
+						<a class="nav-item nav-link" href="{% url 'user_profile' user.id %}">Perfil</a>
+
+						{% if moderador %}
+							<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
+						{% endif %}
+							<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
+								<span id="icone-sair" class="fas fa-sign-out-alt"></span>
+							</a>
+						{% else %} 
 					{% endif %}
-						<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
-							<span id="icone-sair" class="fas fa-sign-out-alt"></span>
-						</a>
-					{% else %} {% endif %}
 
 				</div>
 			</div>

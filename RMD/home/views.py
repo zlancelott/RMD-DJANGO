@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
 from .forms import UploadFileForm
 
-from .models import User, Subject, SubjectClass, Lesson
+from .models import User, Subject, SubjectClass, Lesson, LessonFile
 
 from django.http import HttpResponseRedirect
 
@@ -34,6 +34,9 @@ def logout_view(request):
 def submeter_arquivos(request):
     user_logged_in = request.user
 
+    # Variável para mostrar o botão de moderador
+    moderador = user_logged_in.moderador.all()[0].is_mod
+
     # Turmas em que o usuário está matriculado
     subject_classes = user_logged_in.subjectclasses.all()
 
@@ -55,7 +58,8 @@ def submeter_arquivos(request):
     json_data = {
         #Turmas
         'subject_classes':list(subject_classes),
-        'form': form
+        'form': form,
+        'moderador': moderador,
     }
 
     return render(request, 'submeter_arquivos.html', json_data)
@@ -117,31 +121,34 @@ def submission_details(request, lesson_file_id):
     # Turmas em que o usuário está matriculado
     subject_classes = user_logged_in.subjectclasses.all()
 
-    # Turmas moderadas
-    subject_classes_moderate = [i.subject_class_id for i in user_logged_in.moderador.all()]
+    lesson_file = get_object_or_404(LessonFile, id=lesson_file_id)
 
-    lessons = []
+    if request.method == "POST":
+        form = UploadFileForm(request.POST or None, request.FILES or None, instance = lesson_file)
 
-    for subject_class in subject_classes_moderate:
-        # Obtendo Aulas dessa disciplina
-        lessons.append(subject_class.lessons.all())
+        if form.is_valid():
+            # Se aceitar a submissão ele muda o valor do evaluated para True
+            # e salva o objeto
+            if 'btn_aceitar' in request.POST:
+                lesson_file.evaluated = True
+                lesson_file.save()
+                form.save()
+                return redirect('home')
 
-    lessons_files = []
-    for lesson_x in lessons:
-        for lesson_y in lesson_x:
-            lessons_files.append(lesson_y.lesson.all().filter(evaluated=False))
+            # Se rejeitar a submissão ele deleta o arquivo
+            if 'btn_rejeitar'in request.POST:
+                lesson_file.delete()
+                return redirect('home')
+                
 
-    new_lesson = ""
-
-    for query in lessons_files:
-        for lesson in query:
-            if lesson.id == lesson_file_id:
-                new_lesson = lesson
+    else:
+        form = UploadFileForm(instance = lesson_file)
 
     json_data = {
         'subject_classes':list(subject_classes),
         'moderador': moderador,
-        'lesson': new_lesson
+        'lesson': lesson_file,
+        'form': form
     }
 
     return render(request, 'submission_details.html', json_data)

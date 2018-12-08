@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Nome: {{lesson.name}} </p>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <input type="submit" name=btn_aceitar class="btn btn-success" value="Aceitar">
+        <input type="submit" name=btn_rejeitar class="btn btn-danger" value="Rejeitar">
+
+    </form>
+    <!-- <p>Nome: {{lesson.name}} </p>
     <p>Disciplina: {{lesson.subject.name}}</p>
     <p>Aula: {{lesson.lesson.id}}</p>
     <p>
         Image: 
         <img src="{{MEDIA_URL}}{{lesson.file_image}}" alt="">
-    </p>
+    </p> -->
 
 {% endblock %}
