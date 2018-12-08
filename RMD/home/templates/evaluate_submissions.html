@@ -3,6 +3,10 @@
 
 {% block content %}
 
+    <h2>Submissões</h2>
+
+    <br>
+
     {% for lesson_file in lessons_files %}
         <div class="card">
             <div class="card-header">
@@ -15,7 +19,8 @@
             </div>
         </div>
     
-    
+        <br>
+
     {%  empty %}
         <h3>Não há submissões para avaliar</h3>
     {% endfor %}

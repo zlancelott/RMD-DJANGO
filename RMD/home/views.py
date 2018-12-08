@@ -16,7 +16,12 @@ def home(request):
     # Turmas em que o usuário está matriculado
     subject_classes = user_logged_in.subjectclasses.all()
 
-    moderador = user_logged_in.moderador.all()[0].is_mod
+    # Turmas em que o usuário está moderando
+    subjects_moderates = user_logged_in.moderador.all()
+
+    for subject_moderate in subjects_moderates:
+        if subject_moderate.is_mod:
+            moderador = subject_moderate.is_mod
 
     json_data = {
         #Turmas
@@ -101,6 +106,8 @@ def evaluate_submissions(request):
     for query in lessons_files:
         for lesson in query:
             new_lesson_files.append(lesson)
+
+    print (lessons)
 
     json_data = {
         'subject_classes':list(subject_classes),

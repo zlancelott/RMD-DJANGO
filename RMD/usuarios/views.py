@@ -31,6 +31,8 @@ def user_profile(request, user_id):
     return render(request, 'user_profile.html', json_data)
 
 
+## Aqui é melhor que seja uma avaliação de Administrador
+@login_required
 def delete_submission(request, lesson_file_id):
     lesson_file = get_object_or_404(LessonFile, id=lesson_file_id)
 
