@@ -23,28 +23,7 @@ def home(request):
         if subject_moderate.is_mod:
             moderador = subject_moderate.is_mod
 
-    json_data = {
-        #Turmas
-        'subject_classes':list(subject_classes),
-        'moderador': moderador
-    }
-    return render(request, 'home.html', json_data)
-
-
-def logout_view(request):
-    logout(request)
-    return redirect ('home')
-
-@login_required
-def submeter_arquivos(request):
-    user_logged_in = request.user
-
-    # Variável para mostrar o botão de moderador
-    moderador = user_logged_in.moderador.all()[0].is_mod
-
-    # Turmas em que o usuário está matriculado
-    subject_classes = user_logged_in.subjectclasses.all()
-
+    # Obtendo Formulário 
     if request.method == "POST":
         form = UploadFileForm(request.POST or None, request.FILES or None)
         if form.is_valid():
@@ -55,20 +34,22 @@ def submeter_arquivos(request):
         form = UploadFileForm()
         form.fields['subject'].initial = 1
         form.fields['lesson'].initial = 1
+    # Fim Formulário
 
-
-        ######### PRECISA MELHORAR ###########
-        form.fields['author'].initial = 1
-    
     json_data = {
         #Turmas
         'subject_classes':list(subject_classes),
-        'form': form,
         'moderador': moderador,
+        'form': form
     }
 
-    return render(request, 'submeter_arquivos.html', json_data)
+    return render(request, 'home2.html', json_data)
 
+
+def logout_view(request):
+    logout(request)
+    return redirect ('home')
+    
 @login_required
 def show_image(request):
     return render(request, 'show_images.html')

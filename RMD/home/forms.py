@@ -13,7 +13,6 @@ class UploadFileForm(forms.ModelForm):
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'maxlength': 100,
-                'placeholder': 'Nome do arquivo',
                 'alt': 'Campo Nome'
             }),
 
