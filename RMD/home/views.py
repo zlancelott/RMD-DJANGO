@@ -43,7 +43,7 @@ def home(request):
         'form': form
     }
 
-    return render(request, 'home2.html', json_data)
+    return render(request, 'home.html', json_data)
 
 
 def logout_view(request):
