@@ -61,8 +61,6 @@
 				<!-- Navbar Right Side -->
 				<div class="navbar-nav">
 					{% if user.is_authenticated %}
-						<a class="nav-item nav-link" href="{% url 'user_profile' user.id %}">Perfil</a>
-
 						{% if moderador %}
 							<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
 						{% endif %}

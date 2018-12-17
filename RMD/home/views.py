@@ -3,9 +3,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
-from .forms import UploadFileForm
+from .forms import SubForm
 
-from .models import User, Subject, SubjectClass, Lesson, LessonFile
+from .models import User, Subject, Submission, File, ModerationOfSubjects
 
 from django.http import HttpResponseRedirect
 
@@ -13,35 +13,56 @@ from django.http import HttpResponseRedirect
 def home(request):
     user_logged_in = request.user
 
-    # Turmas em que o usuário está matriculado
-    subject_classes = user_logged_in.subjectclasses.all()
+    try:
+        moderador = ModerationOfSubjects.objects.get(pk=user_logged_in.id)
+        print (moderador)
+    except ModerationOfSubjects.DoesNotExist:
+        moderador = False
+        print ("Não existe")
 
-    # Turmas em que o usuário está moderando
-    subjects_moderates = user_logged_in.moderador.all()
-
-    for subject_moderate in subjects_moderates:
-        if subject_moderate.is_mod:
-            moderador = subject_moderate.is_mod
 
     # Obtendo Formulário 
     if request.method == "POST":
-        form = UploadFileForm(request.POST or None, request.FILES or None)
+        form = SubForm(request.POST or None, request.FILES or None)
+
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            # Salvando Submissão
+            submission = Submission()
+            submission.subject = form.cleaned_data['subject']
+            submission.submission_date = form.cleaned_data['class_date']
+            submission.description = form.cleaned_data['description']
+            submission.topic = form.cleaned_data['topic']
+            submission.uploader = user_logged_in
+
+            submission.save()
+
+            # Salvando Arquivo (s)
+
+            for image in request.FILES.getlist('files'):
+                file = File()
+                file.file_image = image
+                file.submission = submission
+
+                file.save()
+
 
     else:
-        form = UploadFileForm()
-        form.fields['subject'].initial = 1
-        form.fields['lesson'].initial = 1
-    # Fim Formulário
+        form = SubForm(request.POST or None, request.FILES or None)
+
+        # Editando as Labels
+        form.fields['subject'].label = 'Disciplina'
+        form.fields['topic'].label = 'Assunto'
+        form.fields['class_date'].label = 'Data da Aula'
+        form.fields['description'].label = 'Descrição'
+        form.fields['files'].label = 'Imagens da Aula'
+        
+
 
     json_data = {
-        #Turmas
-        'subject_classes':list(subject_classes),
+        'submission_form' : form, #Formulário para Submissão
+        'submissions': user_logged_in.submissions.all(), #Submissões
         'moderador': moderador,
-        'form': form
-    }
+        }
 
     return render(request, 'home.html', json_data)
 

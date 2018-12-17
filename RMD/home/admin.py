@@ -1,26 +1,12 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
-
 from django.contrib import admin
-from .models import User, UserClassAssociation, Course, Subject, SubjectClass, Topic, Lesson, LessonFile
-from .forms import UserCreationForm, UserChangeForm
+from .models import User, Subject, ModerationOfSubjects, Submission, File
+
 
 # Register your models here.
-
-
-class UserAdmin2(UserAdmin):
-    add_form = UserCreationForm
-    form = UserChangeForm
-    model = User
-    list_display = ['email', 'username',]
-
-admin.site.register(User, UserAdmin2)
-admin.site.register(UserClassAssociation)
-admin.site.register(Course)
+admin.site.register(User)
 admin.site.register(Subject)
-admin.site.register(SubjectClass)
-admin.site.register(Topic)
-admin.site.register(Lesson)
-admin.site.register(LessonFile)
+admin.site.register(ModerationOfSubjects)
+admin.site.register(Submission)
+admin.site.register(File)
 
 

@@ -1,33 +1,8 @@
 from django.db import models
+
 from django.contrib.auth.models import (
 	AbstractBaseUser, BaseUserManager, AbstractUser
 )
-from django.utils.translation import ugettext_lazy as _
-
-# Curso
-class Course(models.Model):
-	name = models.CharField(max_length=100)
-	code = models.CharField(max_length=30)
-
-	def __str__(self):
-		return self.name
-
-	def __repr__(self):
-		return f"Course('{self.name}', '{self.code}')"
-
-
-# Disciplina
-class Subject(models.Model):
-	name = models.CharField(max_length=100)
-	code = models.CharField(max_length=30)
-	course = models.ForeignKey(Course, on_delete=models.CASCADE)  # um curso tem várias disciplinas
-
-	def __str__(self):
-		return self.name
-
-	def __repr__(self):
-		return self.name
-
 
 
 # Usuário
@@ -44,62 +19,54 @@ class User(AbstractUser):
 
 	class Meta:
 		db_table = 'home_user'
-
-# Turma (APSO 2017.2, APSO 2018.1....)
-class SubjectClass(models.Model):
-	semester = models.CharField(max_length=10)
-	code = models.CharField(max_length=30)
-	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)  # uma disciplina tem várias turmas
-	users = models.ManyToManyField(User, related_name='subjectclasses')
-
-	def __str__(self):
-		return self.subject.name
-
-	def __repr___(self):
-		return f"SubjectClass('{self.code}', '{self.semester}')"
+		managed =True
 
 
-class UserClassAssociation(models.Model):
-	user_id = models.ForeignKey(User, related_name= 'moderador', on_delete = models.CASCADE)
-	subject_class_id = models.ForeignKey(SubjectClass, on_delete = models.CASCADE)
-	is_mod = models.BooleanField(default=False)
-
-	def __str__(self):
-		return self.user_id.first_name + " monitor de " + self.subject_class_id.subject.name
-
-
-# Aula
-class Lesson (models.Model):
-	date = models.DateField()
-	subject_class = models.ForeignKey(SubjectClass, on_delete=models.CASCADE, related_name='lessons')  # VERIFICAR ON_DELETE
-
-	def __str__(self):
-		return 'Aula'
-
-
-# Arquivo da Aula
-class LessonFile(models.Model):	
+class Subject(models.Model):
 	name = models.CharField(max_length=100)
-	subject = models.ForeignKey(Subject, on_delete = models.CASCADE)
-	lesson = models.ForeignKey(Lesson, related_name="lesson", on_delete = models.CASCADE)
-	author = models.ForeignKey(User, related_name= "lessonFile_author", on_delete = models.DO_NOTHING)
-	file_image = models.ImageField(upload_to="photos/", null=False)
-	evaluated = models.BooleanField(default='False')
+	course = models.CharField(max_length=150, default="Ciências da Computação")
+	semester = models.CharField(max_length=2)
 
+	student = models.ManyToManyField(User, related_name="subjects", null=True)
 
 	def __str__(self):
 		return self.name
 
-	def __repr__(self):
-		return f"LessonFile('{self.name}', '{self.author}')"
-
-# Assunto
-class Topic(models.Model):
-	name = models.CharField(max_length=100)
-	subject = models.ForeignKey(Subject, on_delete = models.CASCADE)
-	lesson_files = models.ManyToManyField(LessonFile)
-
-	def __repr__(self):
-		return f"Topic('{self.name}')"
+	class Meta:
+		db_table = 'home_subject'
+		managed =True
 
 
+class ModerationOfSubjects(models.Model):
+	student = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+	subject = models.OneToOneField(Subject, on_delete=models.CASCADE, null=True)
+
+	class Meta:
+		db_table = 'home_moderationofsubjects'
+		managed =True
+
+
+
+class Submission(models.Model):
+	approved = models.BooleanField(default=False)
+	description =  models.CharField(max_length=250)
+	topic = models.CharField(max_length=100)
+	submission_time = models.DateTimeField(auto_now_add=True)
+	submission_date = models.DateField()
+
+	subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name="subject_submissions")
+	
+	uploader = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="submissions")
+	moderator = models.ForeignKey(ModerationOfSubjects, on_delete=models.DO_NOTHING, related_name="moderator", null=True)
+
+	def __str__(self):
+		return self.topic
+
+
+class File(models.Model):
+	file_image = models.ImageField(upload_to="photos/", null=False)
+
+	submission = models.ForeignKey(Submission, on_delete=models.CASCADE, related_name="files")
+
+	def __str__(self):
+		return self.submission.topic
