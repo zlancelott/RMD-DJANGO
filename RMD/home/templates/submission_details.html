@@ -3,18 +3,40 @@
 {% block content %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
+
+        <p>
+            <label for="{{form.subject.id_for_label}}">Disciplina: </label>
+            {{form.subject}}
+        </p>
+
+        <p>
+            <label for="{{form.topic.id_for_label}}">Assunto: </label>
+            {{form.topic}}
+        </p>
+
+        <p>
+            <label for="{{form.class_date.id_for_label}}">Data da Aula: </label>
+            {{form.class_date}}
+        </p>
+
+        <p>
+            <label for="{{form.description.id_for_label}}">Descrição: </label>
+        </p>
+
+        {{form.description}}
+
+        <p>Imagens Submetidas:</p>
+        {% for file in files %}
+            <a href="">
+                <img class="mt-3 ml-3 mr-3 mb-3 w-25" src="{{MEDIA_URL}}{{file.file_image}}" alt="Imagens Submetidas">
+            </a>
+        {% endfor %}
+
+        <br>
 
         <input type="submit" name=btn_aceitar class="btn btn-success" value="Aceitar">
         <input type="submit" name=btn_rejeitar class="btn btn-danger" value="Rejeitar">
 
     </form>
-    <!-- <p>Nome: {{lesson.name}} </p>
-    <p>Disciplina: {{lesson.subject.name}}</p>
-    <p>Aula: {{lesson.lesson.id}}</p>
-    <p>
-        Image: 
-        <img src="{{MEDIA_URL}}{{lesson.file_image}}" alt="">
-    </p> -->
 
 {% endblock %}

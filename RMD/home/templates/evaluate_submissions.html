@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block title %} Submissões {% endblock %}
 
 {% block content %}
 
@@ -7,15 +8,17 @@
 
     <br>
 
-    {% for lesson_file in lessons_files %}
+    {% for submission in submissions|dictsort:"submission_date" %}
         <div class="card">
             <div class="card-header">
-                {{lesson_file.subject.name}}
+                {{submission.subject.name}}
             </div>
             <div class="card-body">
-                <h5 class="card-title">{{lesson_file.name}}</h5>
-                <p class="card-text">{{lesson_file.lesson.date}}</p>
-                <a href="{% url 'submission_details' lesson_file.id %}" class="btn btn-primary">Detalhes</a>
+                <h5 class="card-title"><strong>{{submission.topic}}</strong></h5>
+                <br>
+                <p class="card-text" style="color:black; font-size:15px"> {{submission.description}} </p>
+                <p class="card-text"><small class="text-muted">Submetido por {{submission.uploader}} em {{submission.submission_date}}</small></p>
+                <a href="{% url 'submission_details' submission.id %}" class="btn btn-primary">Detalhes</a>
             </div>
         </div>
     

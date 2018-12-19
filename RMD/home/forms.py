@@ -11,6 +11,15 @@ class SubForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.all())
     topic = forms.CharField(max_length=100)
     class_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-    description = forms.CharField(max_length=250)
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':5}))
     files = forms.ImageField(widget=forms.FileInput(attrs={'multiple':True}))
 
+    files.widget.attrs.update({'class': 'btn btn-dark button-files'})
+
+
+class UpdateSubForm(forms.Form):
+    ### CRIAR FORMULÁRIO ###
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all())
+    topic = forms.CharField(max_length=100)
+    class_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':5}))

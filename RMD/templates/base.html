@@ -29,11 +29,7 @@
 
 	{% block style %} {% endblock %}
 
-	{% if title %}
-	<title> RMD - Repositório Material de Disciplinas - {{ title }} </title>
-	{% else %}
-	<title> RMD - Repositório Material de Disciplinas</title>
-	{% endif %}
+	<title> RMD - Repositório Material de Disciplinas - {% block title %} {% endblock %} </title>
 
 </head>
 

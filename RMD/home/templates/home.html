@@ -7,13 +7,15 @@
 {% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
 
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+
+	<script src="{% static 'js/dropzone.js' %}"></script>
+
 {% endblock %}
 
 
 {% block content %}
-    {% if moderador %}
-        YEAHHHHHHHHHHHH, EU SOU MODERADOR BITCH
-    {% endif %}
     <!-- Adicionar Arquivos -->
 
     <div class="div-files">
@@ -34,7 +36,7 @@
                     {% csrf_token %}
                     {{submission_form|bootstrap}}
 
-                    <input style="float:right;" type="submit" class="btn btn-success" value="Submeter">  
+                    <input style="float:right;" type="submit" class="btn btn-primary" value="Submeter">  
                 </form>
             </div>
             <div class="modal-footer">
@@ -43,7 +45,6 @@
         </div>
         </div>
     </div>  <!-- Fim do Adicionar Arquivos -->
-
 
 
     <!-- LISTAGEM DE ARQUIVOS EM TIMELINE -->
@@ -111,7 +112,7 @@
                         </a>
                     </div>
                 </div>
-            </li>
+            </li> 
         {% endfor %}
     </ul>
   

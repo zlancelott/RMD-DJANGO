@@ -38,7 +38,7 @@ class Subject(models.Model):
 
 
 class ModerationOfSubjects(models.Model):
-	student = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+	student = models.OneToOneField(User, on_delete=models.CASCADE, related_name='moderador', primary_key=True)
 	subject = models.OneToOneField(Subject, on_delete=models.CASCADE, null=True)
 
 	class Meta:
@@ -49,7 +49,7 @@ class ModerationOfSubjects(models.Model):
 
 class Submission(models.Model):
 	approved = models.BooleanField(default=False)
-	description =  models.CharField(max_length=250)
+	description =  models.TextField(max_length=250)
 	topic = models.CharField(max_length=100)
 	submission_time = models.DateTimeField(auto_now_add=True)
 	submission_date = models.DateField()
