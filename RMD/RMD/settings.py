@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'disciplinas',
     'usuarios',
     'bootstrapform',
-    'bootstrap3_datetime',
     'arquivos',
 ]
 

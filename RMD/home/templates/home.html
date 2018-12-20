@@ -46,7 +46,7 @@
 
     <!-- LISTAGEM DE ARQUIVOS EM TIMELINE -->
 
-    <ul class="timeline" style = "border: 1px solid green">
+    <ul class="timeline">
         {% for submission in submissions|dictsort:"submission_date" %}
             <li class="{% cycle 'timeline' 'timeline-inverted' %}">
                 <div class="timeline-badge primary">
@@ -62,7 +62,7 @@
                     </span>
                 </div>
 
-                <div class="timeline-panel" style = "border: 1px solid red">
+                <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4 class="timeline-title">{{submission.subject.name}}</h4>
                         <br>
