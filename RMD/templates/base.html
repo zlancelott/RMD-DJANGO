@@ -23,17 +23,10 @@
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/meu_estilo.css' %}">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.min.css' %}">
-
-	<script src="{% static 'js/lightbox-plus-jquery.min.js' %}"></script>
 
 	{% block style %} {% endblock %}
 
-	{% if title %}
-	<title> RMD - Repositório Material de Disciplinas - {{ title }} </title>
-	{% else %}
-	<title> RMD - Repositório Material de Disciplinas</title>
-	{% endif %}
+	<title> RMD - Repositório Material de Disciplinas - {% block title %} {% endblock %} </title>
 
 </head>
 
@@ -61,8 +54,6 @@
 				<!-- Navbar Right Side -->
 				<div class="navbar-nav">
 					{% if user.is_authenticated %}
-						<a class="nav-item nav-link" href="{% url 'user_profile' user.id %}">Perfil</a>
-
 						{% if moderador %}
 							<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
 						{% endif %}

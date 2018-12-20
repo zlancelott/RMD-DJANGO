@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['rmd-repository.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['rmd-repository.herokuapp.com', 'repository-rmd.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -87,6 +87,7 @@ WSGI_APPLICATION = 'RMD.wsgi.application'
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+
 
 
 # Password validation
