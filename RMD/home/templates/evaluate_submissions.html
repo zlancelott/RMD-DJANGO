@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Submissões {% endblock %}
+
+{% block content %}
+
+    <h2>Submissões</h2>
+
+    <br>
+
+    {% for submission in submissions|dictsort:"submission_date" %}
+        <div class="card">
+            <div class="card-header">
+                {{submission.subject.name}}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{submission.topic}}</strong></h5>
+                <br>
+                <p class="card-text" style="color:black; font-size:15px"> {{submission.description}} </p>
+                <p class="card-text"><small class="text-muted">Submetido por {{submission.uploader}} em {{submission.submission_date}}</small></p>
+                <a href="{% url 'submission_details' submission.id %}" class="btn btn-primary">Detalhes</a>
+            </div>
+        </div>
+    
+        <br>
+
+    {%  empty %}
+        <h3>Não há submissões para avaliar</h3>
+    {% endfor %}
+
+
+
+    
+{% endblock %}
