@@ -9,6 +9,13 @@
 
     <!-- LIGHTBOX -->
     <link rel="stylesheet" type="text/css" href="{% static 'lightbox2-master/src/css/lightbox.css' %}">
+
+
+    <!-- TimeLine  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/demo.css' %}">
+
 {% endblock %}
 
 
@@ -97,6 +104,7 @@
 
 
 
+        <!-- Código para exibir o popover e configurar a lightbox -->
         <script type="text/javascript">
 
             $(function () {
@@ -106,6 +114,14 @@
             lightbox.option({
                 'resizeDuration': 10,
                 'wrapAround': false
+            });
+
+
+            // Submit post on submit
+            $('').on('submit', function(event){
+                event.preventDefault();
+                console.log("form submitted!")  // sanity check
+                create_post();
             });
 
             

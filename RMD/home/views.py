@@ -45,6 +45,8 @@ def home(request):
 
                 file.save()
 
+            return redirect ('home')
+
 
     else:
         form = SubForm(request.POST or None, request.FILES or None)

@@ -45,6 +45,9 @@ class ModerationOfSubjects(models.Model):
 		db_table = 'home_moderationofsubjects'
 		managed =True
 
+	def __str__(self):
+		return self.student.first_name + " modera a disciplina " + self.subject.name
+
 
 
 class Submission(models.Model):

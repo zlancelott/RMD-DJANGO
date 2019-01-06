@@ -10,9 +10,9 @@ class SubForm(forms.Form):
     ### CRIAR FORMULÁRIO ###
     subject = forms.ModelChoiceField(queryset=Subject.objects.all())
     topic = forms.CharField(max_length=100)
-    class_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows':5}))
-    files = forms.ImageField(widget=forms.FileInput(attrs={'multiple':True}))
+    class_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'id':'date', 'type': 'date'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows':5,'id': 'description'}))
+    files = forms.ImageField(widget=forms.FileInput(attrs={'id':'files','multiple':True}))
 
     files.widget.attrs.update({'class': 'btn btn-dark button-files'})
 
