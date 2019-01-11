@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% load bootstrap %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+
+    <!-- LIGHTBOX -->
+    <link rel="stylesheet" type="text/css" href="{% static 'lightbox2-master/src/css/lightbox.css' %}">
+
+
+    <!-- TimeLine  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/demo.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+    <!-- Adicionar Arquivos -->
+
+    <div class="div-files">
+        <button id="button-files"  type="button" class="btn btn-custom" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-file" style="margin-left:12px"></i><i class="fas fa-plus" style="margin-left: 20px; font-size:25px"></i></button>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enviar Arquivos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formSub" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{submission_form|bootstrap}}
+
+                    <input style="float:right;" type="submit" class="btn btn-primary" value="Submeter">  
+                </form>
+            </div>
+            <div class="modal-footer">
+                Aqui poderia ter uma previsualização dos arquivos submetidos
+            </div>
+        </div>
+        </div>
+    </div>  <!-- Fim do Adicionar Arquivos -->
+
+
+    <!-- LISTAGEM DE ARQUIVOS EM TIMELINE -->
+
+    <ul class="timeline">
+        {% for submission in submissions|dictsort:"submission_date" %}
+            <li class="{% cycle 'timeline' 'timeline-inverted' %}">
+                <div class="timeline-badge primary">
+                    <span data-trigger="hover" data-container="body" data-toggle="popover" 
+                            data-placement="right" title="{{submission.subject.name}}"
+                            data-content="Disciplina ministrada por Fulano no horário AB de Terça e Quinta" 
+                            style="color:white">
+                            <i>
+                                {% for c in submission.subject.name|slice:":1" %}
+                                    {{c}}
+                                {% endfor %}
+                            </i>
+                    </span>
+                </div>
+
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">{{submission.subject.name}}</h4>
+                        <br>
+                        <h5 class=""> {{submission.topic}} </h5>
+                        <p><small class="text-muted"> {{submission.submission_date}} </small></p>
+                    </div>
+
+                    <div class="timeline-body">
+                        <p>{{ submission.description }}</p>
+
+                        <br>
+
+                        {% for file in submission.files.all %}
+
+                            <a href="{{MEDIA_URL}}{{file.file_image}}" data-lightbox="roadtrip">
+                                <img class="mt-3 ml-3 mr-3 mb-3 w-25" src="{{MEDIA_URL}}{{file.file_image}}">
+                            </a>
+                        
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            
+            </li> 
+        {% endfor %}
+    </ul>
+  
+
+    {% block javascript %}
+
+        <script src="{% static 'lightbox2-master/src/js/lightbox.js' %}"></script>
+
+
+
+        <!-- Código para exibir o popover e configurar a lightbox -->
+        <script type="text/javascript">
+
+            $(function () {
+            $('[data-toggle="popover"]').popover()
+            });
+
+            lightbox.option({
+                'resizeDuration': 10,
+                'wrapAround': false
+            });
+
+
+            // Submit post on submit
+            $('').on('submit', function(event){
+                event.preventDefault();
+                console.log("form submitted!")  // sanity check
+                create_post();
+            });
+
+            
+        </script>
+
+    {% endblock %}
+
+
+{% endblock %}

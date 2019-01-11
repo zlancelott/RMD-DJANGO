@@ -42,10 +42,11 @@ INSTALLED_APPS = [
     'home',
     'disciplinas',
     'usuarios',
-    'bootstrapform',
+    'crispy_forms',
     'arquivos',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'home.User'
 

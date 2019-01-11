@@ -33,40 +33,54 @@
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 		<div class="container">
+			<div class="col-md-2 col-sm-1 col-2">
+				<a class="navbar-brand mr-4" href="/">
+					<span class="fas fa-graduation-cap"></span> 
+					RMD
+				</a>
 
-			<a class="navbar-brand mr-4" href="/">
-				<span class="fas fa-graduation-cap"></span> 
-				RMD
-			</a>
-			<form class="form-inline my-2 my-lg-0">
-				<input  class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-light my-2 my-sm-0" type="submit">
-					<span class="fas fa-search"></span>
+			</div>
+			
+			<div class="col-md-5 col-sm-7 col-8">
+				<form class="form-inline my-2 my-lg-0">
+					<div class="col-8">
+						<input  class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search">
+					</div>
+					<div class="col-4">
+						<button class="btn btn-light my-2 my-sm-0" type="submit">
+							<span class="fas fa-search"></span>
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-5 col-sm-1 col-2">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
 				</button>
-			</form>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarToggle">
-				<div class="navbar-nav mr-auto">
-				</div>
-				<!-- Navbar Right Side -->
-				<div class="navbar-nav">
-					{% if user.is_authenticated %}
-						{% if moderador %}
-							<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
-						{% endif %}
-						
-						<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
-							<span id="icone-sair" class="fas fa-sign-out-alt"></span>
-						</a>
-					{% endif %}
 
+				<div class="collapse navbar-collapse" id="navbarToggle">
+					<div class="navbar-nav mr-auto">
+					</div>
+					<!-- Navbar Right Side -->
+					<div class="navbar-nav">
+						{% if user.is_authenticated %}
+							{% if moderador %}
+								<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
+							{% endif %}
+							
+							<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
+								<span id="icone-sair" class="fas fa-sign-out-alt"></span>
+							</a>
+						{% endif %}
+	
+					</div>
 				</div>
 			</div>
 		</div>
 	</nav>
+	<br><br>
 	<div id="content" class="container" >
 		{% block content %}{% endblock %}
 	</div>

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-{% load bootstrap %}
+<!-- Carregando tag para bootstrap em forms -->
+{% load crispy_forms_tags %} 
 
 {% load static %}
 
@@ -15,6 +16,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/timeline/demo.css' %}">
+
+    <!-- Calendar -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/calendar/main.css' %}">
+
+
+    <!-- Inline Element -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 
 {% endblock %}
 
@@ -38,7 +46,8 @@
             <div class="modal-body">
                 <form id="formSub" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{submission_form|bootstrap}}
+
+                    <!-- Formulário vai aqui -->
 
                     <input style="float:right;" type="submit" class="btn btn-primary" value="Submeter">  
                 </form>
@@ -50,60 +59,86 @@
         </div>
     </div>  <!-- Fim do Adicionar Arquivos -->
 
-
     <!-- LISTAGEM DE ARQUIVOS EM TIMELINE -->
 
-    <ul class="timeline">
-        {% for submission in submissions|dictsort:"submission_date" %}
-            <li class="{% cycle 'timeline' 'timeline-inverted' %}">
-                <div class="timeline-badge primary">
-                    <span data-trigger="hover" data-container="body" data-toggle="popover" 
-                            data-placement="right" title="{{submission.subject.name}}"
-                            data-content="Disciplina ministrada por Fulano no horário AB de Terça e Quinta" 
-                            style="color:white">
-                            <i>
-                                {% for c in submission.subject.name|slice:":1" %}
-                                    {{c}}
-                                {% endfor %}
-                            </i>
-                    </span>
-                </div>
-
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">{{submission.subject.name}}</h4>
-                        <br>
-                        <h5 class=""> {{submission.topic}} </h5>
-                        <p><small class="text-muted"> {{submission.submission_date}} </small></p>
-                    </div>
-
-                    <div class="timeline-body">
-                        <p>{{ submission.description }}</p>
-
-                        <br>
-
-                        {% for file in submission.files.all %}
-
-                            <a href="{{MEDIA_URL}}{{file.file_image}}" data-lightbox="roadtrip">
-                                <img class="mt-3 ml-3 mr-3 mb-3 w-25" src="{{MEDIA_URL}}{{file.file_image}}">
-                            </a>
-                        
-                        {% endfor %}
-                    </div>
+    <section class="cd-timeline js-cd-timeline">
+        <div class="cd-timeline__container">
+            <div class="cd-timeline__block js-cd-block">
+                <div class="cd-timeline__content js-cd-content">
+                    <!-- Formulário para realizar numa submissão na timeline... -->
                     
-                </div>
-            
-            </li> 
-        {% endfor %}
-    </ul>
+                    <form id="formSub2" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+
+                        <h2><a href="#" id="subject">Disciplina</a></h2>
+                        {{ submission_form.subject|as_crispy_field }}
+                        <br>
+
+                        <h3> <a href="#" id="topic">Assunto</a> </h3>
+                        {{ submission_form.topic|as_crispy_field }}
+                        <br>
+
+                        <h2> <a href="#" id="date">Data</a> </h2>
+                        {{ submission_form.class_date|as_crispy_field }}
+
+                        <p><a href="#" id="description">Descrição da Aula</a></p>
+                        {{ submission_form.description|as_crispy_field }}
+
+                        {{ submission_form.files|as_crispy_field }}
+
+                        <input style="float:right;" type="submit" class="btn btn-primary" value="Submeter">  
+                    </form>
+                    
+
+                    <!-- <a href="#0" class="cd-timeline__read-more">Read more</a> -->
+                    <span class="cd-timeline__date">{{submission.submission_date}}</span>
+                </div> <!-- cd-timeline__content -->
+            </div> <!-- cd-timeline__block -->
+
+            {% for submission in submissions|dictsort:"submission_date" %}
+                <div class="cd-timeline__block js-cd-block">
+                    <div class="cd-timeline__content js-cd-content"  data-toggle="collapse" data-target="#{{submission.id}}">
+
+                        <h2>{{submission.subject.name}}</h2>
+                        <br>
+                        
+                        <h3> {{submission.topic}} </h3>
+
+                        <div class="collapse" id="{{submission.id}}">
+                            <p>{{ submission.description }}</p>
+
+
+                            {% for file in submission.files.all %}
+
+                                <a href="{{MEDIA_URL}}{{file.file_image}}" data-lightbox="roadtrip">
+                                    <img class="mt-3 ml-3 mr-3 mb-3 w-25" src="{{MEDIA_URL}}{{file.file_image}}">
+                                </a>
+                            
+                            {% endfor %}
+                        </div>
+
+                        <!-- <a href="#0" class="cd-timeline__read-more">Read more</a> -->
+                        <span class="cd-timeline__date">{{submission.submission_date}}</span>
+                    </div> <!-- cd-timeline__content -->
+                </div> <!-- cd-timeline__block -->
+            {% endfor %}
+        </div>
+    </section>
   
 
     {% block javascript %}
 
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
         <script src="{% static 'lightbox2-master/src/js/lightbox.js' %}"></script>
 
+        <script src="{% static 'js/timeline/main.js' %}"></script>
 
-
+        
+        
         <!-- Código para exibir o popover e configurar a lightbox -->
         <script type="text/javascript">
 
@@ -116,15 +151,44 @@
                 'wrapAround': false
             });
 
+            $(document).ready(function() {
+                //toggle `popup` / `inline` mode
+                $.fn.editable.defaults.mode = 'inline';     
+                
+                /*  Elementos Editáveis do Formulário..  */
+                $('#subject').editable({
+                    type:'select',
+                    placement: 'right',
+                    value: 1,
 
-            // Submit post on submit
-            $('').on('submit', function(event){
-                event.preventDefault();
-                console.log("form submitted!")  // sanity check
-                create_post();
+                    source:[
+                    ]
+                    
+                });
+
+                $('#topic').editable({
+                    type:'text',
+                    placement: 'right',
+                    
+                    url: "/post/"
+
+                });
+
+                $('#description').editable({
+                    type:'text',
+                    placement: 'right',
+                    
+                });
             });
 
-            
+
+            $("#id_subject").val("1");
+            $("#id_topic").val("While e For");
+
+            var now = new Date();
+
+            $("#id_class_date").css("background-color", "black");
+
         </script>
 
     {% endblock %}

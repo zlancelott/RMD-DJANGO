@@ -6,6 +6,18 @@ from .models import Submission, File, User, Subject
 
 
 
+# class SubForm(forms.Form):
+#     ### CRIAR FORMULÁRIO ###
+#     subject = forms.ModelChoiceField(widget=forms.HiddenInput(), queryset=Subject.objects.all())
+#     topic = forms.CharField(widget=forms.HiddenInput(), max_length=100)
+#     class_date = forms.DateField(widget=forms.HiddenInput())
+#     description = forms.CharField(widget=forms.HiddenInput())
+#     files = forms.ImageField(widget=forms.FileInput(attrs={'id':'files','multiple':True}))
+
+#     files.widget.attrs.update({'class': 'btn btn-dark button-files'})
+
+
+
 class SubForm(forms.Form):
     ### CRIAR FORMULÁRIO ###
     subject = forms.ModelChoiceField(queryset=Subject.objects.all())
@@ -15,7 +27,6 @@ class SubForm(forms.Form):
     files = forms.ImageField(widget=forms.FileInput(attrs={'id':'files','multiple':True}))
 
     files.widget.attrs.update({'class': 'btn btn-dark button-files'})
-
 
 class UpdateSubForm(forms.Form):
     ### CRIAR FORMULÁRIO ###

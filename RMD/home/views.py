@@ -23,6 +23,11 @@ def home(request):
 
     # Obtendo Formulário 
     if request.method == "POST":
+
+        print ('Entrei')
+
+        print (request.REQUEST)
+
         form = SubForm(request.POST or None, request.FILES or None)
 
         if form.is_valid():
@@ -59,12 +64,15 @@ def home(request):
         form.fields['files'].label = 'Imagens da Aula'
         
 
-
     json_data = {
         'submission_form' : form, #Formulário para Submissão
         'submissions': user_logged_in.submissions.filter(approved=True), #Apenas submissões já aprovadas
         'moderador': moderador,
+        'subjects': user_logged_in.subjects.all
         }
+
+
+    
 
     return render(request, 'home.html', json_data)
 
@@ -153,11 +161,12 @@ def submission_details(request, submission_id):
         form.fields['class_date'].default = '03/12/1996'
         form.fields['description'].initial = submission.description
 
-
+    
     json_data = {
         'moderador': moderador,
         'form': form,
         'files': submission.files.all(),
     }
+
 
     return render(request, 'submission_details.html', json_data)
