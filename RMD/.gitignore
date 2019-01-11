@@ -1,3 +1,8 @@
-*.sqlite3
+*.==lite3
 *pyc
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+Pipfile
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73

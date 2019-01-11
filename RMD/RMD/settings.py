@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/:
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
@@ -28,7 +28,11 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['rmdisciplinas.herokuapp.com', 'localhost', '127.0.0.1']
+=======
+ALLOWED_HOSTS = ['rmd-repository.herokuapp.com', 'repository-rmd.herokuapp.com', 'localhost', '127.0.0.1']
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 
 # Application definition
 
@@ -42,11 +46,18 @@ INSTALLED_APPS = [
     'home',
     'disciplinas',
     'usuarios',
+<<<<<<< HEAD
     'crispy_forms',
     'arquivos',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+=======
+    'bootstrapform',
+    'arquivos',
+]
+
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 
 AUTH_USER_MODEL = 'home.User'
 

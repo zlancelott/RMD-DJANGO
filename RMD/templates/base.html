@@ -33,6 +33,7 @@
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
 		<div class="container">
+<<<<<<< HEAD
 			<div class="col-md-2 col-sm-1 col-2">
 				<a class="navbar-brand mr-4" href="/">
 					<span class="fas fa-graduation-cap"></span> 
@@ -76,15 +77,51 @@
 						{% endif %}
 	
 					</div>
+=======
+
+			<a class="navbar-brand mr-4" href="/">
+				<span class="fas fa-graduation-cap"></span> 
+				RMD
+			</a>
+			<form class="form-inline my-2 my-lg-0">
+				<input  class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-light my-2 my-sm-0" type="submit">
+					<span class="fas fa-search"></span>
+				</button>
+			</form>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarToggle">
+				<div class="navbar-nav mr-auto">
+				</div>
+				<!-- Navbar Right Side -->
+				<div class="navbar-nav">
+					{% if user.is_authenticated %}
+						{% if moderador %}
+							<a class="nav-item nav-link" href="{% url 'evaluate_submissions' %}">Avaliar Submissões</button>
+						{% endif %}
+						
+						<a class="nav-item nav-link" href="{% url 'logout' %}">Logout &ensp;
+							<span id="icone-sair" class="fas fa-sign-out-alt"></span>
+						</a>
+					{% endif %}
+
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 				</div>
 			</div>
 		</div>
 	</nav>
+<<<<<<< HEAD
 	<br><br>
+=======
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 	<div id="content" class="container" >
 		{% block content %}{% endblock %}
 	</div>
 
+<<<<<<< HEAD
 
 	<script src="{% static 'js/main.js' %}"></script>	
 
@@ -92,6 +129,11 @@
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	
+=======
+		<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	 crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"

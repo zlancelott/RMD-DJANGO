@@ -23,11 +23,14 @@ def home(request):
 
     # Obtendo Formulário 
     if request.method == "POST":
+<<<<<<< HEAD
 
         print ('Entrei')
 
         print (request.REQUEST)
 
+=======
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
         form = SubForm(request.POST or None, request.FILES or None)
 
         if form.is_valid():
@@ -50,8 +53,11 @@ def home(request):
 
                 file.save()
 
+<<<<<<< HEAD
             return redirect ('home')
 
+=======
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
 
     else:
         form = SubForm(request.POST or None, request.FILES or None)
@@ -64,16 +70,25 @@ def home(request):
         form.fields['files'].label = 'Imagens da Aula'
         
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
     json_data = {
         'submission_form' : form, #Formulário para Submissão
         'submissions': user_logged_in.submissions.filter(approved=True), #Apenas submissões já aprovadas
         'moderador': moderador,
+<<<<<<< HEAD
         'subjects': user_logged_in.subjects.all
         }
 
 
     
 
+=======
+        }
+
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
     return render(request, 'home.html', json_data)
 
 
@@ -161,12 +176,19 @@ def submission_details(request, submission_id):
         form.fields['class_date'].default = '03/12/1996'
         form.fields['description'].initial = submission.description
 
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
     json_data = {
         'moderador': moderador,
         'form': form,
         'files': submission.files.all(),
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5bdc9b1d3d80e1c31baf1e7175fec87948af9a73
     return render(request, 'submission_details.html', json_data)
